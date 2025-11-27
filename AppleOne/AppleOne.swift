@@ -100,6 +100,7 @@ final class AppleOne {
     // Execute on the CPU actor so we can call its actor-isolated methods.
     fileprivate func initIO(cpu: isolated CPU6502) async {
         // Some info here: https://www.sbprojects.net/projects/apple1/wozmon.php - more in the annotated disassembly.
+        // See also the Apple I manual: https://s3data.computerhistory.org/brochures/apple.applei.1976.102646518.pdf
         //
         // WozMon RESET does the following:
         // • Write 0x7F to DSP
@@ -122,10 +123,15 @@ final class AppleOne {
         // line (0x0D). Again it sets the high bit, so actually 0x8D.
         //
         // Next it gets into a loop:
-        //  I/O read at KBDCR - high bit is clear indicating not ready
+        //  I/O read at KBDCR - high bit is clear indicating not ready - i.e. keyboardBuffer is empty.
         //  Repeat
         //
-        // So next we need to implement a keystroke buffer for the host.
+        // When the host receives a key press it is added to keyboardBuffer. 0x0A (NL) is translated to OX0D (CR)
+        // and everything gets the msb set, because that's what the Apple I expects. KBDCR will also have the high bit
+        // set, as there is stuff in keyboardBuffer. This causes WozMon to read KBD, which sends the first item in
+        // the buffer. This will then be echoed to screen via a write to DSP. Again there is a translation. This time
+        // 0x0D (CR) is translated to OX0A (NL). If the host provides a CR to WozMon the line is interpreted as a
+        // command and executed.
         
         cpu.setIOReadCallback { [weak self] (address: UInt16) in
             guard let self = self else { return nil }
