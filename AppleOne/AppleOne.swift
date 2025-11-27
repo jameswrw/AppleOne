@@ -136,12 +136,6 @@ final class AppleOne {
         cpu.setIOReadCallback { [weak self] (address: UInt16) in
             guard let self = self else { return nil }
             
-            let mnemonic = self.addressToMnemonic(address)
-            let logMessage = String(
-                format: "I/O read at 0x%04X\(mnemonic)", address
-            )
-            Logger().debug("\(logMessage)")
-            
             switch address {
             case self.KBDCR: // 0xD011
                 // Bit 7 indicates “data ready”
@@ -159,12 +153,7 @@ final class AppleOne {
         }
         cpu.setIOWriteCallback { [weak self] (address: UInt16, value: UInt8) in
             guard let self = self else { return value }
-            let mnemonic = self.addressToMnemonic(address)
-            let logMessage = String(
-                format: "I/O write of 0x%02X (0x%02X) to 0x%02X\(mnemonic)", value, value & 0x7F, address
-            )
-            Logger().debug("\(logMessage)")
-            
+
             if address == self.DSP {
                 // Hop to the main actor to invoke UI-bound handler safely.
                 Task { @MainActor in

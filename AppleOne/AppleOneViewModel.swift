@@ -27,7 +27,12 @@ public final class AppleOneViewModel: ObservableObject {
         if output == 0x0D {
             output = 0x0A
         }
-        text.append(String(UnicodeScalar(output)))
+        
+        if output == 0x0A || (0x20..<0x7F).contains(output) {
+            text.append(String(UnicodeScalar(output)))
+        } else if output == 0x7F {
+            let _ = text.popLast()
+        }
     }
     
     func keyPressed(_ key: String) {
