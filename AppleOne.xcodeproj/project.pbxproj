@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		1AB8A37F2ED70B80004A0F2A /* Swift6502 in Frameworks */ = {isa = PBXBuildFile; productRef = 1AB8A37E2ED70B80004A0F2A /* Swift6502 */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXContainerItemProxy section */
 		1AB8A35A2ED6FD85004A0F2A /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
@@ -52,6 +56,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1AB8A37F2ED70B80004A0F2A /* Swift6502 in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -78,6 +83,7 @@
 				1AB8A34E2ED6FD84004A0F2A /* AppleOne */,
 				1AB8A35C2ED6FD85004A0F2A /* AppleOneTests */,
 				1AB8A3662ED6FD85004A0F2A /* AppleOneUITests */,
+				1AB8A37D2ED70B80004A0F2A /* Frameworks */,
 				1AB8A34D2ED6FD84004A0F2A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -90,6 +96,13 @@
 				1AB8A3632ED6FD85004A0F2A /* AppleOneUITests.xctest */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		1AB8A37D2ED70B80004A0F2A /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -112,6 +125,7 @@
 			);
 			name = AppleOne;
 			packageProductDependencies = (
+				1AB8A37E2ED70B80004A0F2A /* Swift6502 */,
 			);
 			productName = AppleOne;
 			productReference = 1AB8A34C2ED6FD84004A0F2A /* AppleOne.app */;
@@ -195,6 +209,9 @@
 			);
 			mainGroup = 1AB8A3432ED6FD84004A0F2A;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				1AB8A37A2ED70747004A0F2A /* XCRemoteSwiftPackageReference "Swift6502" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 1AB8A34D2ED6FD84004A0F2A /* Products */;
 			projectDirPath = "";
@@ -412,8 +429,9 @@
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Debug;
 		};
@@ -442,8 +460,9 @@
 				SWIFT_APPROACHABLE_CONCURRENCY = YES;
 				SWIFT_DEFAULT_ACTOR_ISOLATION = MainActor;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_STRICT_CONCURRENCY = complete;
 				SWIFT_UPCOMING_FEATURE_MEMBER_IMPORT_VISIBILITY = YES;
-				SWIFT_VERSION = 5.0;
+				SWIFT_VERSION = 6.0;
 			};
 			name = Release;
 		};
@@ -563,6 +582,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		1AB8A37A2ED70747004A0F2A /* XCRemoteSwiftPackageReference "Swift6502" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/jameswrw/Swift6502.git";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		1AB8A37E2ED70B80004A0F2A /* Swift6502 */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 1AB8A37A2ED70747004A0F2A /* XCRemoteSwiftPackageReference "Swift6502" */;
+			productName = Swift6502;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 1AB8A3442ED6FD84004A0F2A /* Project object */;
 }
