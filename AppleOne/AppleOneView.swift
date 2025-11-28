@@ -21,6 +21,7 @@ struct AppleOneView: View {
                     viewModel.keyPressed(chars)
                 }
             )
+            .frame(width: 445, height: 600)
             .tint(.green)
             HStack {
                 Button("Reset") {
