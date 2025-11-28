@@ -12,16 +12,16 @@ struct AppleOneView: View {
     
     var body: some View {
         VStack {
-            TextEditor(text: $viewModel.text)
-                .scrollContentBackground(.hidden)
-                .background(.black)
-                .foregroundColor(.green)
-                .tint(.green)
-                .font(.custom("Monaco", size: 18))
-                .onKeyPress() { keyPress in
-                    viewModel.keyPressed(keyPress.characters)
-                    return .handled
+            AppleOneTextView(
+                text: $viewModel.text,
+                font: .init(name: "Monaco", size: 18) ?? .monospacedSystemFont(ofSize: 18, weight: .regular),
+                foregroundColor: .systemGreen,
+                backgroundColor: .black,
+                onKeyPress: { chars in
+                    viewModel.keyPressed(chars)
                 }
+            )
+            .tint(.green)
             Button("Reset") {
                 print("Reset!")
             }
