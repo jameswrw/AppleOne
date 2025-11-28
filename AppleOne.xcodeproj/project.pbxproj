@@ -8,10 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		1AB8A37F2ED70B80004A0F2A /* Swift6502 in Frameworks */ = {isa = PBXBuildFile; productRef = 1AB8A37E2ED70B80004A0F2A /* Swift6502 */; };
-		1ADD09B52ED90306000F43C5 /* AppleOneTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ADD09B42ED90306000F43C5 /* AppleOneTextView.swift */; };
-		1ADD09B82EDA18B6000F43C5 /* NoPageScrollView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ADD09B72EDA18B6000F43C5 /* NoPageScrollView.swift */; };
-		1ADD09BA2EDA18D2000F43C5 /* WrapToWidthTextView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ADD09B92EDA18D2000F43C5 /* WrapToWidthTextView.swift */; };
-		1ADD09BC2EDA18FC000F43C5 /* AppleOneTextViewCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1ADD09BB2EDA18FC000F43C5 /* AppleOneTextViewCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,10 +31,6 @@
 		1AB8A34C2ED6FD84004A0F2A /* AppleOne.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = AppleOne.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AB8A3592ED6FD85004A0F2A /* AppleOneTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppleOneTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		1AB8A3632ED6FD85004A0F2A /* AppleOneUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = AppleOneUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		1ADD09B42ED90306000F43C5 /* AppleOneTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleOneTextView.swift; sourceTree = "<group>"; };
-		1ADD09B72EDA18B6000F43C5 /* NoPageScrollView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NoPageScrollView.swift; sourceTree = "<group>"; };
-		1ADD09B92EDA18D2000F43C5 /* WrapToWidthTextView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WrapToWidthTextView.swift; sourceTree = "<group>"; };
-		1ADD09BB2EDA18FC000F43C5 /* AppleOneTextViewCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleOneTextViewCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -55,6 +47,11 @@
 		1AB8A3662ED6FD85004A0F2A /* AppleOneUITests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = AppleOneUITests;
+			sourceTree = "<group>";
+		};
+		1ADD09BD2EDA1A38000F43C5 /* AppleOneDisplay */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = AppleOneDisplay;
 			sourceTree = "<group>";
 		};
 /* End PBXFileSystemSynchronizedRootGroup section */
@@ -88,7 +85,7 @@
 		1AB8A3432ED6FD84004A0F2A = {
 			isa = PBXGroup;
 			children = (
-				1ADD09B62EDA188B000F43C5 /* AppleOneDisplay */,
+				1ADD09BD2EDA1A38000F43C5 /* AppleOneDisplay */,
 				1AB8A34E2ED6FD84004A0F2A /* AppleOne */,
 				1AB8A35C2ED6FD85004A0F2A /* AppleOneTests */,
 				1AB8A3662ED6FD85004A0F2A /* AppleOneUITests */,
@@ -114,17 +111,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-		1ADD09B62EDA188B000F43C5 /* AppleOneDisplay */ = {
-			isa = PBXGroup;
-			children = (
-				1ADD09B42ED90306000F43C5 /* AppleOneTextView.swift */,
-				1ADD09BB2EDA18FC000F43C5 /* AppleOneTextViewCoordinator.swift */,
-				1ADD09B92EDA18D2000F43C5 /* WrapToWidthTextView.swift */,
-				1ADD09B72EDA18B6000F43C5 /* NoPageScrollView.swift */,
-			);
-			path = AppleOneDisplay;
-			sourceTree = "<group>";
-		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -142,6 +128,7 @@
 			);
 			fileSystemSynchronizedGroups = (
 				1AB8A34E2ED6FD84004A0F2A /* AppleOne */,
+				1ADD09BD2EDA1A38000F43C5 /* AppleOneDisplay */,
 			);
 			name = AppleOne;
 			packageProductDependencies = (
@@ -273,10 +260,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1ADD09BA2EDA18D2000F43C5 /* WrapToWidthTextView.swift in Sources */,
-				1ADD09BC2EDA18FC000F43C5 /* AppleOneTextViewCoordinator.swift in Sources */,
-				1ADD09B52ED90306000F43C5 /* AppleOneTextView.swift in Sources */,
-				1ADD09B82EDA18B6000F43C5 /* NoPageScrollView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
