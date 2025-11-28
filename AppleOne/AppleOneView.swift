@@ -22,8 +22,17 @@ struct AppleOneView: View {
                 }
             )
             .tint(.green)
-            Button("Reset") {
-                print("Reset!")
+            HStack {
+                Button("Reset") {
+                    viewModel.reset()
+                }
+                Toggle("Halt", isOn: $viewModel.halt)
+                    .onChange(of: viewModel.halt, initial: false) {
+                        Task {
+                            await viewModel.haltExecution()
+                        }
+                    }
+                Toggle("Echo delete", isOn: $viewModel.echoDelete)
             }
         }
         .padding()

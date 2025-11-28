@@ -12,14 +12,30 @@ import Swift6502
 
 public final class AppleOneViewModel: ObservableObject {
     
-    @Published var text: String = ""
+    @Published var text = ""
+    @Published var halt = false
+    @Published var echoDelete = true
+
     var appleOne: AppleOne?
     
     init() {
+        reset()
+    }
+    
+    func reset() {
         Task {
+            await appleOne?.haltExecution(true)
+            text = ""
+            appleOne?.freeMemory()
+            
             await appleOne = AppleOne(outputCharacterHandler: outputCharacterHandler)
             await appleOne?.run()
+            await appleOne?.haltExecution(halt)
         }
+    }
+    
+    func haltExecution() async {
+        await appleOne?.haltExecution(halt)
     }
     
     func outputCharacterHandler(_ key: UInt8) {
@@ -33,7 +49,9 @@ public final class AppleOneViewModel: ObservableObject {
         if output == 0x0A || (0x20..<0x7F).contains(output) {
             // WozMon uses 0x5F '_' for backspace.
             if output == 0x5F {
-                let _ = text.popLast()
+                if echoDelete {
+                    let _ = text.popLast()
+                }
             } else {
                 text.append(String(UnicodeScalar(output)))
             }

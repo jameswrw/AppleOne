@@ -48,19 +48,24 @@ final class AppleOne {
     var outputCharacterHandler: OutputCharacterHandler? = nil
     private var cpu: CPU6502!
     nonisolated(unsafe) private var memory: UnsafeMutablePointer<UInt8>!
-
+    
     // Host-to-Apple-1 keypress buffer (bytes with bit 7 already set, as Apple-1 expects).
     private let keyboardBuffer = LockedByteBuffer()
     
     init?(outputCharacterHandler: OutputCharacterHandler? = nil) async {
         self.outputCharacterHandler = outputCharacterHandler
 
-        memory = initMemory()
+        initMemory()
         cpu = initCPU(memory: memory, ioAddresses: [KBD, KBDCR, DSP, DSPCR])
         await initIO(cpu: cpu)
     }
     
+    // Not called.
     deinit {
+        memory.deallocate()
+    }
+    
+    func freeMemory() {
         memory.deallocate()
     }
     
@@ -81,16 +86,18 @@ final class AppleOne {
         }
     }
     
-    fileprivate func initMemory() -> UnsafeMutablePointer<UInt8> {
-        let memory = UnsafeMutablePointer<UInt8>.allocate(capacity: 0x10000)
+    func haltExecution(_ halt: Bool) async {
+        halt ? await cpu.haltExecution() : await cpu.resumeExecution()
+    }
+    
+    fileprivate func initMemory() {
+        memory = UnsafeMutablePointer<UInt8>.allocate(capacity: 0x10000)
         memset(memory, 0, 0x10000)
         
         let rom = WozMonROM().rom
         let _ = rom.withUnsafeBytes { (romBytes: UnsafeRawBufferPointer) in
             memcpy(memory + 0xFF00, romBytes.baseAddress, romBytes.count)
         }
-
-        return memory
     }
     
     fileprivate func initCPU(memory: UnsafeMutablePointer<UInt8>, ioAddresses: Set<UInt16> = []) -> CPU6502 {
