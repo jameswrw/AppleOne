@@ -29,8 +29,12 @@ struct AppleOneTextView: NSViewRepresentable {
         // Configure text view
         let textView = WrapToWidthTextView()
         textView.host = context.coordinator
-        textView.isEditable = false
+
+        // Important: allow editing so the insertion point (caret) is drawn.
+        // We'll still block actual edits in shouldChangeText.
+        textView.isEditable = true
         textView.isSelectable = true
+
         textView.isRichText = false
         textView.importsGraphics = false
         textView.usesFindPanel = false
@@ -41,11 +45,14 @@ struct AppleOneTextView: NSViewRepresentable {
         textView.isAutomaticTextReplacementEnabled = false
         textView.isContinuousSpellCheckingEnabled = false
         textView.allowsUndo = false
+
+        // Disable default hyphenation via layout manager (modern API)
         textView.layoutManager?.usesDefaultHyphenation = false
 
-        // Set typing attributes up-front
+        // Set visual attributes up-front
         textView.font = font
         textView.textColor = foregroundColor
+        textView.insertionPointColor = foregroundColor
         textView.backgroundColor = backgroundColor
         textView.drawsBackground = true
         textView.textContainerInset = .zero
@@ -71,6 +78,9 @@ struct AppleOneTextView: NSViewRepresentable {
         context.coordinator.textView = textView
         context.coordinator.parent = self
         context.coordinator.replaceText(text, scrollToBottom: true, in: scrollView)
+
+        // Make it first responder so the caret shows immediately
+        textView.window?.makeFirstResponder(textView)
 
         return scrollView
     }
@@ -101,6 +111,7 @@ struct AppleOneTextView: NSViewRepresentable {
         // Re-apply colors and font if theme changes dynamically
         if textView.font != font { textView.font = font }
         if textView.textColor != foregroundColor { textView.textColor = foregroundColor }
+        if textView.insertionPointColor != foregroundColor { textView.insertionPointColor = foregroundColor }
         if textView.backgroundColor != backgroundColor { textView.backgroundColor = backgroundColor }
 
         // Only set first responder if none yet
@@ -199,6 +210,15 @@ struct AppleOneTextView: NSViewRepresentable {
         func textDidChange(_ notification: Notification) {
             guard let tv = textView, parent.text != tv.string else { return }
             parent.text = tv.string
+        }
+
+        // Block user edits while still allowing a visible caret.
+        func textView(_ textView: NSTextView, shouldChangeTextIn affectedCharRange: NSRange, replacementString: String?) -> Bool {
+            // Forward the key press if you still want to handle it
+            if let replacementString, !replacementString.isEmpty {
+                parent.onKeyPress(replacementString)
+            }
+            return false
         }
     }
 
