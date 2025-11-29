@@ -209,7 +209,6 @@ struct AppleOneTests {
         let expectedOutput =
         """
         \\
-        \
         30
 
         0030: 00
