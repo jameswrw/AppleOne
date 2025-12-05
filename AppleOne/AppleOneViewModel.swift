@@ -7,6 +7,7 @@
 
 import Foundation
 import Combine
+import os
 
 import Swift6502
 
@@ -15,8 +16,10 @@ public final class AppleOneViewModel: ObservableObject {
     @Published var text = ""
     @Published var halt = false
     @Published var echoDelete = true
+    @Published var loadAddress = "0x2000"
 
     var appleOne: AppleOne?
+    var oldLoadAddress = "0x2000"
     
     init() {
         reset()
@@ -75,6 +78,44 @@ public final class AppleOneViewModel: ObservableObject {
             appleOne?.inputCharacter(UInt8(asciiValue))
         }
     }
+ 
+    func load(_ url: URL) {
+        guard url.startAccessingSecurityScopedResource() else {
+            Logger().error("Sandbox issue, can't read file")
+            return
+        }
+        
+        do {
+            let data = try Data(contentsOf: url)
+            
+            if let address = UInt16(loadAddress.removePrefix("0x"), radix: 16) {
+                if data.count >= UInt16.max {
+                    Logger().error("Error: File too large for this Apple 1.")
+                } else if Int(address) + data.count > UInt16.max {
+                    Logger().error("Error: File too large at the given load address.")
+                }
+                
+                Task {
+                    await appleOne?.blitData(data, toAddress: address)
+                }
+            }
+        } catch {
+            Logger().error("Error loading file (\(url)): (error.localizedDescription)")
+        }
+        url.stopAccessingSecurityScopedResource()
+    }
     
+    func validateLoadAddress() {
+        let regex = /^(0x)?[0-9A-Fa-f]{,4}$/
+        if loadAddress.firstMatch(of: regex) == nil {
+            loadAddress = oldLoadAddress
+        }
+        
+        loadAddress = "0x" + loadAddress
+            .removePrefix("0x")
+            .uppercased()
+            .leftPadding(toLength: 4, withPad: "0")
+        oldLoadAddress = loadAddress
+    }
 }
 

@@ -1,5 +1,5 @@
 //
-//  String+RemovePrefix.swift
+//  String+HexUtils.swift
 //  AppleOne
 //
 //  Created by James Weatherley on 29/11/2025.

@@ -34,6 +34,11 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
+		1A906A372EDB520D0071EB0B /* Utilities */ = {
+			isa = PBXFileSystemSynchronizedRootGroup;
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		1AB8A34E2ED6FD84004A0F2A /* AppleOne */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
 			path = AppleOne;
@@ -85,6 +90,7 @@
 		1AB8A3432ED6FD84004A0F2A = {
 			isa = PBXGroup;
 			children = (
+				1A906A372EDB520D0071EB0B /* Utilities */,
 				1ADD09BD2EDA1A38000F43C5 /* AppleOneDisplay */,
 				1AB8A34E2ED6FD84004A0F2A /* AppleOne */,
 				1AB8A35C2ED6FD85004A0F2A /* AppleOneTests */,
@@ -127,6 +133,7 @@
 			dependencies = (
 			);
 			fileSystemSynchronizedGroups = (
+				1A906A372EDB520D0071EB0B /* Utilities */,
 				1AB8A34E2ED6FD84004A0F2A /* AppleOne */,
 				1ADD09BD2EDA1A38000F43C5 /* AppleOneDisplay */,
 			);

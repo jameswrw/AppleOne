@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import UniformTypeIdentifiers
 
 struct AppleOneView: View {
     @StateObject private var viewModel = AppleOneViewModel()
+    @State private var showFileImporter = false
     
     var body: some View {
         VStack {
@@ -34,10 +36,28 @@ struct AppleOneView: View {
                         }
                     }
                 Toggle("Echo delete", isOn: $viewModel.echoDelete)
+                TextField("Memory address", text: $viewModel.loadAddress.max(6))
+                    .frame(width: 120)
+                    .onSubmit {
+                    viewModel.validateLoadAddress()
+                }
+                Button("Load") {
+                    showFileImporter = true
+                }
             }
         }
         .padding()
+        .fileImporter(isPresented: $showFileImporter, allowedContentTypes: [UTType.data]) { result in
+            switch result {
+            case .success(let url):
+                viewModel.load(url)
+            case .failure(let error):
+                print(error.localizedDescription)
+                showFileImporter = false
+            }
+        }
     }
+
 }
 
 #Preview {

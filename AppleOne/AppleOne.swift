@@ -90,13 +90,22 @@ final class AppleOne {
         halt ? await cpu.haltExecution() : await cpu.resumeExecution()
     }
     
+    func blitData(_ data: Data, toAddress address: UInt16) async {
+        await cpu.blitData(data, toAddress: address)
+    }
+    
     fileprivate func initMemory() {
         memory = UnsafeMutablePointer<UInt8>.allocate(capacity: 0x10000)
         memset(memory, 0, 0x10000)
         
-        let rom = WozMonROM().rom
+        let rom = WozMon().rom
         let _ = rom.withUnsafeBytes { (romBytes: UnsafeRawBufferPointer) in
             memcpy(memory + 0xFF00, romBytes.baseAddress, romBytes.count)
+        }
+        
+        let basic = AppleBASIC().rom
+        let _ = basic.withUnsafeBytes { (romBytes: UnsafeRawBufferPointer) in
+            memcpy(memory + 0xE000, romBytes.baseAddress, romBytes.count)
         }
     }
     
