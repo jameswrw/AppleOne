@@ -56,7 +56,7 @@ final class AppleOne {
         self.outputCharacterHandler = outputCharacterHandler
 
         initMemory()
-        cpu = initCPU(memory: memory, ioAddresses: [KBD, KBDCR, DSP, DSPCR])
+        cpu = await initCPU(memory: memory, ioAddresses: [KBD, KBDCR, DSP, DSPCR])
         await initIO(cpu: cpu)
     }
     
@@ -109,8 +109,14 @@ final class AppleOne {
         }
     }
     
-    fileprivate func initCPU(memory: UnsafeMutablePointer<UInt8>, ioAddresses: Set<UInt16> = []) -> CPU6502 {
-        CPU6502(memory: MemoryWrapper(memory), ioAddresses: ioAddresses)
+    fileprivate func initCPU(memory: UnsafeMutablePointer<UInt8>, ioAddresses: Set<UInt16> = []) async -> CPU6502 {
+        let cpu = CPU6502(memory: MemoryWrapper(memory), ioAddresses: ioAddresses)
+        
+//        await cpu.setOpCodeHook { (pc: UInt16, opcode: Opcodes6502) in
+//            print(String(format: "0x%04X: \(opcode)", pc))
+//        }
+        
+        return cpu
     }
     
     // Execute on the CPU actor so we can call its actor-isolated methods.
