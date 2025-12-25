@@ -112,8 +112,22 @@ final class AppleOne {
     fileprivate func initCPU(memory: UnsafeMutablePointer<UInt8>, ioAddresses: Set<UInt16> = []) async -> CPU6502 {
         let cpu = CPU6502(memory: MemoryWrapper(memory), ioAddresses: ioAddresses)
         
-//        await cpu.setOpCodeHook { (pc: UInt16, opcode: Opcodes6502) in
-//            print(String(format: "0x%04X: \(opcode)", pc))
+//        await cpu.setOpCodeHook {
+//            (pc: UInt16,
+//             opcode: Opcodes6502,
+//             a: UInt8,
+//             x: UInt8,
+//             y: UInt8,
+//             f: UInt8,
+//             sp: UInt8) in
+//            
+//            let binaryFlags = String(f, radix: 2)
+//            let flags = String(repeating: "0", count: max(0, 8 - binaryFlags.count)) + binaryFlags
+//            print(String(
+//                format: "0x%04X:\t\(opcode)\tA: 0x%02X, X: 0x%02X, Y: 0x%02X, SP: 0x%02X, F: \(flags)",
+//                pc, a, x, y, sp
+//            )
+//            )
 //        }
         
         return cpu
@@ -204,3 +218,4 @@ final class AppleOne {
         }
     }
 }
+
